@@ -10,6 +10,7 @@
     <description>ComBo - The COMics BOt</description>
     <modules>
         <module>combo-scrap</module>
+        <module>combo-telegram</module>
     </modules>
     <packaging>pom</packaging>
 
