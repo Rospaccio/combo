@@ -1,10 +1,13 @@
 package xyz.codevomit.combo.scrap.search;
 
+import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -32,6 +35,12 @@ public class Scraper {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public InputStream contentAsInputStream(String comicId, LocalDate date) {
+
+        byte[] content = downloadComicImage(comicId, date);
+        return new ByteArrayInputStream(content);
     }
 
     private String downloadHtml(HttpClient client, String comicId, LocalDate date)

@@ -6,14 +6,18 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import xyz.codevomit.combo.command.ComboCommand;
+import xyz.codevomit.combo.policy.SimpleUpdatePolicy;
 import xyz.codevomit.combo.scrap.search.ComicsIds;
 import xyz.codevomit.combo.scrap.search.Scraper;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 @Slf4j
@@ -48,18 +52,10 @@ public class Combo extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if(update.getMessage().isCommand()){
-            byte[] imageContent = scraper.downloadComicImage(ComicsIds.CALVIN_AND_HOBBES, LocalDate.now());
-            InputFile inputFile = new InputFile(new ByteArrayInputStream(imageContent), "Daily comic");
-            SendPhoto photo = SendPhoto.builder()
-                    .photo(inputFile)
-                    .chatId("" + update.getMessage().getChatId())
-                    .build();
-            try {
-                execute(photo);
-            }catch (TelegramApiException te){
-                log.error("Error!", te);
-            }
-
+            ComboCommand<Message> command = ComboCommand.buildCommand(update.getMessage());
+            SimpleUpdatePolicy policy = new SimpleUpdatePolicy(this, scraper);
+            Message sent = command.applyPolicy(policy);
+            log.info("Message enqueued: {}", sent);
         }
     }
 }
