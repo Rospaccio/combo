@@ -10,6 +10,7 @@ import xyz.codevomit.combo.api.CommandPolicy;
 import xyz.codevomit.combo.bot.Combo;
 import xyz.codevomit.combo.command.DailyCommand;
 import xyz.codevomit.combo.command.OnCommand;
+import xyz.codevomit.combo.command.SelectionCommand;
 import xyz.codevomit.combo.scrap.search.ComicsIds;
 import xyz.codevomit.combo.scrap.search.Scraper;
 
@@ -61,6 +62,26 @@ public class SimpleUpdatePolicy implements CommandPolicy<Message> {
             log.error("Error!", te);
             throw new RuntimeException(te);
         }
+    }
+
+    @Override
+    public Message processSelectionCommand(SelectionCommand selectionCommand) {
+        Message message = null;
+        for (String id : ComicsIds.IDS){
+            try {
+                InputStream stream = scraper.contentAsInputStream(id, LocalDate.now());
+                InputFile file = new InputFile(stream, id + " daily");
+                SendPhoto photo = SendPhoto.builder()
+                        .photo(file)
+                        .chatId("" + selectionCommand.getMessage().getChatId())
+                        .build();
+                message = combo.execute(photo);
+            }
+            catch (TelegramApiException te){
+                log.error("Error!", te);
+            }
+        }
+        return message;
     }
 
     private Message sendError(OnCommand onCommand) throws TelegramApiException {

@@ -15,6 +15,7 @@ public abstract class ComboCommand<T> {
     static {
         messageToCommandCunstructorMap = new HashMap<>();
         messageToCommandCunstructorMap.put("/daily", DailyCommand::new);
+        messageToCommandCunstructorMap.put("/selection", SelectionCommand::new);
         messageToCommandCunstructorMap.put("/on", OnCommand::new);
     }
 

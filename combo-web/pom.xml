@@ -37,6 +37,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
+                <configuration>
+                    <finalName>combo</finalName>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

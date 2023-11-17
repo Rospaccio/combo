@@ -55,7 +55,6 @@ public class Combo extends TelegramLongPollingBot {
             ComboCommand<Message> command = ComboCommand.buildCommand(update.getMessage());
             SimpleUpdatePolicy policy = new SimpleUpdatePolicy(this, scraper);
             Message sent = command.applyPolicy(policy);
-            log.info("Message enqueued: {}", sent);
         }
     }
 }

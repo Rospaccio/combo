@@ -1,9 +1,12 @@
 package xyz.codevomit.combo.scrap.search;
 
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import xyz.codevomit.combo.scrap.cache.ComicsCache;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,21 +19,30 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
+@Slf4j
 public class Scraper {
 
     public static final String BASE_URL = "https://www.gocomics.com/";
 
-    public Scraper() {
+    private ComicsCache cache;
 
+    public Scraper() {
+        this.cache = new ComicsCache();
     }
 
     public byte[] downloadComicImage(String comicId, LocalDate date) {
+
+        if(cache.contains(comicId, date)) {
+            log.info("Cache hit: " + comicId + ", " + date.toString());
+            return cache.get(comicId, date);
+        }
 
         try {
             HttpClient client = HttpClient.newBuilder().build();
             String html = downloadHtml(client, comicId, date);
             String imageUrl = readImgUrl(html);
             byte[] content = downloadContent(client, imageUrl);
+            cache.store(comicId, date, content);
             return content;
         } catch (Exception e) {
             throw new RuntimeException(e);
