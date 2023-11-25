@@ -10,7 +10,7 @@ import xyz.codevomit.combo.bot.Combo;
 public class Main {
     public static void main(String[] args) throws TelegramApiException {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        var combo = new Combo();
+        var combo = new Combo(null);
         botsApi.registerBot(combo);
         log.info("Started");
     }

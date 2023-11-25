@@ -12,6 +12,7 @@
         <module>combo-scrap</module>
         <module>combo-telegram</module>
         <module>combo-web</module>
+        <module>combo-data</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -7,13 +7,15 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import xyz.codevomit.combo.bot.Combo;
+import xyz.codevomit.combo.data.DataService;
 
 @Configuration
 public class ComboWebConfiguration {
 
     @Bean
-    public Combo comboBot(){
-        return new Combo();
+    @Autowired
+    public Combo comboBot(DataService dataService){
+        return new Combo(dataService);
     }
 
     @Bean
