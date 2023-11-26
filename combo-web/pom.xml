@@ -24,6 +24,11 @@
             <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
             <groupId>xyz.codevomit.combo</groupId>
             <artifactId>combo-telegram</artifactId>
             <version>1.0-SNAPSHOT</version>
