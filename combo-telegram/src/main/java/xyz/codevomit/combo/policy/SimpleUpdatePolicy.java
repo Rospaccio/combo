@@ -77,7 +77,7 @@ public class SimpleUpdatePolicy implements CommandPolicy<Message> {
                         .build();
                 message = combo.execute(photo);
             }
-            catch (TelegramApiException te){
+            catch (Exception te){
                 log.error("Error!", te);
             }
         }

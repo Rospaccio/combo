@@ -1,16 +1,39 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Combo Console</title>
     <style>
             body {
                 font-family: sans-serif;
             }
-
+            .pse {
+                border-style: solid;
+                border-width: 1px;
+                border-collapse: collapse;
+                padding: 6px;
+            }
     </style>
 </head>
     <body>
         <h1>Combo Console</h1>
         <h2>Work in Progress</h2>
         <p>Coming soon: live data and statistics</p>
+    <table class="pse">
+        <thead>
+            <th class="pse">Username</th>
+            <th class="pse">First Name</th>
+            <th class="pse">Surname</th>
+            <th class="pse">Unix Time</th>
+            <th class="pse">Server Time</th>
+        </thead>
+        <tbody>
+            <tr th:each="message: ${receivedMessages}">
+                <td class="pse" th:text="${message.username}"></td>
+                <td class="pse" th:text="${message.firstName}"></td>
+                <td class="pse" th:text="${message.surname}"></td>
+                <td class="pse" th:text="${message.unixTime}"></td>
+                <td class="pse" th:text="${message.serverTime}"></td>
+            </tr>
+        </tbody>
+    </table>
     </body>
 </html>

@@ -14,6 +14,8 @@ public class ComicsIds {
     public static final String WIZARD_OF_ID = "wizardofid";
     public static final String WIZARD_OF_ID_CLASSIC = "wizard-of-id-classics";
 
+    public static final String GET_FUZZY = "getfuzzy";
+
     public static final String[] IDS = {
             CALVIN_AND_HOBBES,
             PEARLS_BEFORE_SWINE,
@@ -25,6 +27,7 @@ public class ComicsIds {
             GARFIELD_CLASSICS,
             PEANUTS,
             WIZARD_OF_ID,
-            WIZARD_OF_ID_CLASSIC
+            WIZARD_OF_ID_CLASSIC,
+            GET_FUZZY
     };
 }

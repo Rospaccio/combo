@@ -28,6 +28,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("**/h2-console/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());

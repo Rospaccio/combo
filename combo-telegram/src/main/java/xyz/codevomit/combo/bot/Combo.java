@@ -9,23 +9,23 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import xyz.codevomit.combo.command.ComboCommand;
 import xyz.codevomit.combo.data.DataService;
 import xyz.codevomit.combo.data.telegram.ReceivedMessage;
-import xyz.codevomit.combo.data.telegram.TelegramChat;
 import xyz.codevomit.combo.policy.SimpleUpdatePolicy;
 import xyz.codevomit.combo.scrap.search.Scraper;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Slf4j
 public class Combo extends TelegramLongPollingBot {
 
+    private String secretFileName;
     private Scraper scraper;
     private DataService dataService;
 
-    public Combo(DataService dataService){
+    public Combo(String secretFileName, DataService dataService){
         scraper = new Scraper();
+        this.secretFileName = secretFileName;
         this.dataService = dataService;
     }
 
@@ -40,7 +40,7 @@ public class Combo extends TelegramLongPollingBot {
     public String getBotToken() {
         if (token == null) {
             try {
-                var stream = getClass().getClassLoader().getResourceAsStream("secret");
+                var stream = getClass().getClassLoader().getResourceAsStream(secretFileName);
                 if(stream == null){
                     log.error("ERROR! File 'secret' not found");
                 }
